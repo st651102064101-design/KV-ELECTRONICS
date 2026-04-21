@@ -25,13 +25,13 @@ define('WP_SITEURL','https://localhost:36140/kv-electronics/files');
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'kv_electronics' );
+define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
 
 /** Database username */
-define( 'DB_USER', 'root' );
+define( 'DB_USER', 'KV-ELECTRONICS' );
 
 /** Database password */
-define( 'DB_PASSWORD', '' );
+define( 'DB_PASSWORD', 'Dcn7iAvad#7enR6&' );
 
 /** Database hostname */
 define( 'DB_HOST', 'localhost' );
