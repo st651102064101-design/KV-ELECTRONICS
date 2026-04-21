@@ -79,6 +79,10 @@ $table_prefix = '7bmcdm_';
 /* Add any custom values between this line and the "stop editing" line. */
 
 define('WP_ALLOW_MULTISITE', true);
+
+// Security hardening.
+define( 'DISALLOW_FILE_EDIT', true );
+
 /**
  * For developers: WordPress debugging mode.
  *

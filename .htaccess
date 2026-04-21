@@ -1,3 +1,28 @@
+# Protect core files and hidden configuration
+<IfModule mod_authz_core.c>
+    <FilesMatch "^(wp-config\.php|\.htaccess|readme\.html|license\.txt|wp-config-sample\.php)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "^(wp-config\.php|\.htaccess|readme\.html|license\.txt|wp-config-sample\.php)$">
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Block XML-RPC access unless explicitly needed
+<Files xmlrpc.php>
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
+</Files>
+
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
