@@ -30,5 +30,3 @@
 [21-Apr-2026 12:58:33 UTC] WordPress database error Table 'db-kv-electronics.7bmcdm_wfconfig' doesn't exist for query SELECT name, val, autoload FROM 7bmcdm_wfconfig WHERE name = 'debugOn' made by activate_plugin, do_action('activate_wordfence/wordfence.php'), WP_Hook->do_action, WP_Hook->apply_filters, wordfence::installPlugin, wordfence::runInstall, wordfence::status, wordfence::isDebugOn, wfConfig::get
 [21-Apr-2026 13:08:46 UTC] [KV_MAIL] Brevo API failed (401): {"message":"API Key is not enabled","code":"unauthorized"}
 
-[21-Apr-2026 14:33:37 UTC] [KV_MAIL] Brevo API failed (401): {"message":"API Key is not enabled","code":"unauthorized"}
-

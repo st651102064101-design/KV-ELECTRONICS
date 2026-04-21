@@ -21,22 +21,16 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-if ( isset( $_SERVER['HTTP_HOST'] ) && in_array( $_SERVER['HTTP_HOST'], array( 'localhost', '127.0.0.1' ), true ) ) {
-	define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
-	define( 'DB_USER', 'root' );
-	define( 'DB_PASSWORD', '' );
-	define( 'DB_HOST', 'localhost:3306' );
-	define( 'WP_HOME', 'http://localhost/kv-electronics' );
-	define( 'WP_SITEURL', 'http://localhost/kv-electronics' );
-	define( 'FS_METHOD', 'direct' );
-	define( 'FS_CHMOD_DIR', 0755 );
-	define( 'FS_CHMOD_FILE', 0644 );
-} else {
-	define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
-	define( 'DB_USER', 'wp_whicu' );
-	define( 'DB_PASSWORD', 'K2xg#$5KgIaU9nw9' );
-	define( 'DB_HOST', 'localhost:3306' );
-}
+define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
+
+/** Database username */
+define( 'DB_USER', 'wp_whicu' );
+
+/** Database password */
+define( 'DB_PASSWORD', 'K2xg#$5KgIaU9nw9' );
+
+/** Database hostname */
+define( 'DB_HOST', 'localhost:3306' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -79,10 +73,6 @@ $table_prefix = '7bmcdm_';
 /* Add any custom values between this line and the "stop editing" line. */
 
 define('WP_ALLOW_MULTISITE', true);
-
-// Security hardening.
-define( 'DISALLOW_FILE_EDIT', true );
-
 /**
  * For developers: WordPress debugging mode.
  *
@@ -99,6 +89,8 @@ if ( ! defined( 'WP_DEBUG' ) ) {
 	define( 'WP_DEBUG', false );
 }
 
+define( 'DISALLOW_FILE_EDIT', true );
+define( 'CONCATENATE_SCRIPTS', false );
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
