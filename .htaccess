@@ -13,6 +13,19 @@
 # Disable directory browsing
 Options -Indexes
 
+# Allow public static assets to load, including admin CSS/JS
+<IfModule mod_authz_core.c>
+    <FilesMatch "\.(css|js|svg|ttf|woff|woff2|eot|png|jpg|jpeg|gif)$">
+        Require all granted
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(css|js|svg|ttf|woff|woff2|eot|png|jpg|jpeg|gif)$">
+        Order allow,deny
+        Allow from all
+    </FilesMatch>
+</IfModule>
+
 # Allow WordPress admin assets and scripts to load
 <IfModule mod_authz_core.c>
     <FilesMatch "^(load-scripts\.php|load-styles\.php|admin-ajax\.php|wp-login\.php|favicon\.ico)$">
