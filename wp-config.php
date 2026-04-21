@@ -28,6 +28,9 @@ if ( isset( $_SERVER['HTTP_HOST'] ) && in_array( $_SERVER['HTTP_HOST'], array( '
 	define( 'DB_HOST', 'localhost:3306' );
 	define( 'WP_HOME', 'http://localhost/kv-electronics' );
 	define( 'WP_SITEURL', 'http://localhost/kv-electronics' );
+	define( 'FS_METHOD', 'direct' );
+	define( 'FS_CHMOD_DIR', 0755 );
+	define( 'FS_CHMOD_FILE', 0644 );
 } else {
 	define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
 	define( 'DB_USER', 'wp_whicu' );
