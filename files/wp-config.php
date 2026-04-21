@@ -16,6 +16,7 @@ if (isset($_SERVER['HTTP_HOST'])) {
         }
         define('WP_HOME', $protocol . $_SERVER['HTTP_HOST'] . $base);
         define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST'] . $base);
+        define('WP_CONTENT_URL', $protocol . $_SERVER['HTTP_HOST'] . $base . '/wp-content');
     } else {
         define('WP_HOME', $protocol . $_SERVER['HTTP_HOST']);
         define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST']);
@@ -128,6 +129,34 @@ define('FS_METHOD', 'direct');
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
+}
+
+// Auto-replace hardcoded URLs in HTML output for local environment
+if (isset($_SERVER['HTTP_HOST']) && (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false)) {
+    ob_start(function($html) {
+        // Normal URLs
+        $html = str_replace('https://localhost/wp-content', WP_CONTENT_URL, $html);
+        $html = str_replace('http://localhost/wp-content', WP_CONTENT_URL, $html);
+        
+        // JSON escaped URLs (used by Elementor and some scripts)
+        $escaped_content_url = str_replace('/', '\/', WP_CONTENT_URL);
+        $html = str_replace('https:\/\/localhost\/wp-content', $escaped_content_url, $html);
+        $html = str_replace('http:\/\/localhost\/wp-content', $escaped_content_url, $html);
+
+        // Replace main site URLs too if they are missing the port
+        $html = str_replace('https://localhost/kv-electronics/files', WP_SITEURL, $html);
+        $html = str_replace('http://localhost/kv-electronics/files', WP_SITEURL, $html);
+        $html = str_replace('https://localhost/KV-ELECTRONICS/files', WP_SITEURL, $html);
+        $html = str_replace('http://localhost/KV-ELECTRONICS/files', WP_SITEURL, $html);
+        
+        $escaped_site_url = str_replace('/', '\/', WP_SITEURL);
+        $html = str_replace('https:\/\/localhost\/kv-electronics\/files', $escaped_site_url, $html);
+        $html = str_replace('http:\/\/localhost\/kv-electronics\/files', $escaped_site_url, $html);
+        $html = str_replace('https:\/\/localhost\/KV-ELECTRONICS\/files', $escaped_site_url, $html);
+        $html = str_replace('http:\/\/localhost\/KV-ELECTRONICS\/files', $escaped_site_url, $html);
+
+        return $html;
+    });
 }
 
 /** Sets up WordPress vars and included files. */

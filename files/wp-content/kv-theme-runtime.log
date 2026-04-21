@@ -2690,3 +2690,5 @@ Stack trace:
 [20-Apr-2026 04:04:39 UTC] PHP Warning:  Undefined array key "user_login" in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/user.php on line 2247
 [20-Apr-2026 04:04:40 UTC] [KV_MAIL] Brevo API failed (401): {"message":"We have detected you are using an unrecognised IP address 2403:6200:8846:62b:2901:e599:560d:2088. If you performed this action make sure to add the new IP address in this link: https://app.brevo.com/security/authorised_ips","code":"unauthorized"}
 
+[21-Apr-2026 07:58:02 UTC] [KV_MAIL] Brevo API failed (401): {"message":"API Key is not enabled","code":"unauthorized"}
+
