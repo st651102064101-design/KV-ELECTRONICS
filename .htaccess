@@ -13,6 +13,19 @@
 # Disable directory browsing
 Options -Indexes
 
+# Allow WordPress admin assets and scripts to load
+<IfModule mod_authz_core.c>
+    <FilesMatch "^(load-scripts\.php|load-styles\.php|admin-ajax\.php|wp-login\.php|favicon\.ico)$">
+        Require all granted
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "^(load-scripts\.php|load-styles\.php|admin-ajax\.php|wp-login\.php|favicon\.ico)$">
+        Order allow,deny
+        Allow from all
+    </FilesMatch>
+</IfModule>
+
 # Block XML-RPC access unless explicitly needed
 <Files xmlrpc.php>
     <IfModule mod_authz_core.c>
