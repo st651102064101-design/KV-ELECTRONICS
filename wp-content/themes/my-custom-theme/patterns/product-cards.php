@@ -9,7 +9,7 @@
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"80px","bottom":"80px"}}},"backgroundColor":"tertiary","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull has-tertiary-background-color has-background" style="padding-top:80px;padding-bottom:80px">
     <!-- wp:heading {"textAlign":"center","style":{"typography":{"fontSize":"36px","fontWeight":"700"},"spacing":{"margin":{"top":"0","bottom":"50px"}}}} -->
-    <h2 class="wp-block-heading has-text-align-center" style="margin-top:0;margin-bottom:50px;font-size:36px;font-weight:700">Our Product Categories</h2>
+    <h2 class="wp-block-heading has-text-align-center" style="margin-top:0;margin-bottom:50px;font-size:36px;font-weight:700">Our Product Categorie</h2>
     <!-- /wp:heading -->
 
     <!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"30px"}}}} -->
