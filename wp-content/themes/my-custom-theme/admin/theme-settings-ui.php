@@ -773,9 +773,9 @@ $be_all_patterns = function_exists('kv_be_get_all_patterns') ? kv_be_get_all_pat
               if (is_array($_decoded) && count($_decoded) > 0) $_nav_items = $_decoded;
             }
             if (empty($_nav_items)) $_nav_items = $_default_items;
-            $_items_json_val = esc_attr(json_encode($_nav_items, JSON_UNESCAPED_UNICODE));
+            $_items_json_val = wp_json_encode($_nav_items, JSON_UNESCAPED_UNICODE) ?: '[]';
             ?>
-            <input type="hidden" id="nav_menu_items_json" name="nav_menu_items_json" value="<?php echo $_items_json_val; ?>">
+            <input type="hidden" id="nav_menu_items_json" name="nav_menu_items_json" value="<?php echo esc_attr($_items_json_val); ?>">
 
             <ul id="nav-menu-builder">
             <?php foreach ($_nav_items as $_idx => $_item):
@@ -1141,14 +1141,14 @@ $be_all_patterns = function_exists('kv_be_get_all_patterns') ? kv_be_get_all_pat
 
       <!-- Block Editor data (JSON for JS) -->
       <script>
-      window._beAllBlocks      = <?php echo wp_json_encode($be_all_blocks); ?>;
-      window._beAllPatterns    = <?php echo wp_json_encode($be_all_patterns); ?>;
-      window._beDisabledBlocks = <?php echo wp_json_encode($be_disabled_blocks); ?>;
-      window._beDisabledPats   = <?php echo wp_json_encode($be_disabled_patterns); ?>;
-      window._beDefColors      = <?php echo wp_json_encode($be_def_colors); ?>;
-      window._beDefSizes       = <?php echo wp_json_encode($be_def_sizes); ?>;
-      window._beEffColors      = <?php echo wp_json_encode($be_eff_colors); ?>;
-      window._beEffSizes       = <?php echo wp_json_encode($be_eff_sizes); ?>;
+      window._beAllBlocks      = <?php echo wp_json_encode($be_all_blocks, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beAllPatterns    = <?php echo wp_json_encode($be_all_patterns, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beDisabledBlocks = <?php echo wp_json_encode($be_disabled_blocks, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beDisabledPats   = <?php echo wp_json_encode($be_disabled_patterns, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beDefColors      = <?php echo wp_json_encode($be_def_colors, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beDefSizes       = <?php echo wp_json_encode($be_def_sizes, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beEffColors      = <?php echo wp_json_encode($be_eff_colors, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
+      window._beEffSizes       = <?php echo wp_json_encode($be_eff_sizes, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?: '[]'; ?>;
       </script>
 
     </div><!-- /.ts-content -->
@@ -1429,8 +1429,8 @@ function showToast(msg, type = '') {
 }
 
 /* ── AJAX Auto-Save (blur on inputs) ──────── */
-const nonce   = '<?php echo wp_create_nonce('wp_rest'); ?>';
-const apiUrl  = '<?php echo esc_url(rest_url('kv/v1/site-options')); ?>';
+const nonce   = <?php echo wp_json_encode(wp_create_nonce('wp_rest')); ?>;
+const apiUrl  = <?php echo wp_json_encode(rest_url('kv/v1/site-options')); ?>;
 const saveStatus = document.getElementById('ts-save-status');
 let saveTimer = null;
 
@@ -1597,8 +1597,8 @@ function ajaxSave() {
     nmbSaveBtn.textContent = '⏳ กำลังบันทึก…';
     if (nmbStatus) nmbStatus.textContent = '';
     const nonce  = document.querySelector('meta[name="wp-nonce"]')?.content
-                || (typeof wpRestNonce !== 'undefined' ? wpRestNonce : '<?php echo esc_js(wp_create_nonce('wp_rest')); ?>');
-    const apiUrl = '<?php echo esc_url(rest_url('kv/v1/site-options')); ?>';
+                || (typeof wpRestNonce !== 'undefined' ? wpRestNonce : <?php echo wp_json_encode(wp_create_nonce('wp_rest')); ?>);
+    const apiUrl = <?php echo wp_json_encode(rest_url('kv/v1/site-options')); ?>;
     fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
@@ -1642,8 +1642,8 @@ function ajaxSave() {
       nmbFlushBtn.disabled = true;
       nmbFlushBtn.textContent = '⏳ กำลังล้างแคช…';
       const nonce  = document.querySelector('meta[name="wp-nonce"]')?.content
-                  || (typeof wpRestNonce !== 'undefined' ? wpRestNonce : '<?php echo esc_js(wp_create_nonce('wp_rest')); ?>');
-      fetch('<?php echo esc_url(rest_url('kv/v1/flush-cache')); ?>', {
+                  || (typeof wpRestNonce !== 'undefined' ? wpRestNonce : <?php echo wp_json_encode(wp_create_nonce('wp_rest')); ?>);
+      fetch(<?php echo wp_json_encode(rest_url('kv/v1/flush-cache')); ?>, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },
       })
@@ -1724,7 +1724,7 @@ document.getElementById('ts-main-form').addEventListener('submit', function(e) {
 /* ═══════════════════════════════════════════════════════════
    BLOCK EDITOR MANAGER — JavaScript
    ═══════════════════════════════════════════════════════════ */
-const beApiUrl = '<?php echo esc_url(rest_url('kv/v1/block-editor-settings')); ?>';
+const beApiUrl = <?php echo wp_json_encode(rest_url('kv/v1/block-editor-settings')); ?>;
 let beDisabledBlocks = [...(window._beDisabledBlocks || [])];
 let beDisabledPats   = [...(window._beDisabledPats || [])];
 let beColors         = JSON.parse(JSON.stringify(window._beEffColors || []));
