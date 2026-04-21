@@ -3,7 +3,7 @@
  * Plugin Name: KV IIS REST API Auth Fix
  * Description: Fixes WordPress REST API authentication on IIS servers where cookie parsing fails.
  * Version: 1.0
- * 
+ *
  * This MU plugin runs BEFORE themes and regular plugins.
  * It fixes IIS-specific issues with auth cookie handling for REST API requests.
  */
@@ -13,7 +13,6 @@
 // This runs at the earliest possible point (before WordPress parses cookies).
 foreach ($_COOKIE as $name => $value) {
     if (strpos($name, 'wordpress_') === 0 && is_string($value)) {
-        // If the value contains URL-encoded pipes, decode them
         if (strpos($value, '%7C') !== false) {
             $_COOKIE[$name] = urldecode($value);
         }
@@ -21,14 +20,12 @@ foreach ($_COOKIE as $name => $value) {
 }
 
 // === Step 1.5: Capture stray output before REST API JSON ===
-// Start output buffer to catch any PHP warnings/notices that would break JSON
 $is_rest = (
     (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false) ||
     (isset($_GET['rest_route']))
 );
 if ($is_rest) {
     ob_start();
-    // We'll check if anything was buffered when the REST response is served
     add_filter('rest_pre_serve_request', function ($served, $result, $request, $server) {
         $buffered = ob_get_clean();
         if (!empty(trim($buffered))) {
@@ -45,20 +42,16 @@ if ($is_rest) {
     }, 1, 4);
 }
 
-// === Step 2: Diagnostic logging for REST API auth ===
-// Logs to wp-content/kv-mu-auth.log for debugging
 add_action('rest_api_init', function () {
-    $log = WP_CONTENT_DIR . '/kv-mu-auth.log';
+    $log = defined('WP_CONTENT_DIR') ? WP_CONTENT_DIR . '/kv-mu-auth.log' : '/tmp/kv-mu-auth.log';
     $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
-    // Log cookie info for every REST request
     $wp_cookie_names = [];
     $logged_in_value_preview = 'none';
     foreach ($_COOKIE as $name => $value) {
         if (strpos($name, 'wordpress') === 0 || strpos($name, 'wp-') === 0) {
             $wp_cookie_names[] = $name;
             if (strpos($name, 'wordpress_logged_in_') === 0) {
-                // Show first 20 chars + length for debugging (don't log full cookie for security)
                 $logged_in_value_preview = substr($value, 0, 30) . '...(len=' . strlen($value) . ',pipes=' . substr_count($value, '|') . ')';
             }
         }
@@ -75,9 +68,6 @@ add_action('rest_api_init', function () {
         $logged_in_value_preview
     ), 3, $log);
 
-    // === Step 3: Remove WordPress's nonce-checking cookie handler ===
-    // On IIS, nonce verification fails even with valid cookies.
-    // We replace it with a handler that authenticates without nonce requirement.
     remove_filter('rest_authentication_errors', 'rest_cookie_check_errors', 100);
 
     add_filter('rest_authentication_errors', function ($result) use ($log) {
@@ -92,19 +82,15 @@ add_action('rest_api_init', function () {
             return $result;
         }
 
-        // If already logged in by normal WP auth, allow it
         if (is_user_logged_in()) {
             $uid = get_current_user_id();
             @error_log(sprintf("[%s] MU_AUTH: already logged in uid=%d, ALLOWING uri=%s\n",
                 gmdate('c'), $uid, $uri
             ), 3, $log);
-            // Send refreshed nonce
             rest_get_server()->send_header('X-WP-Nonce', wp_create_nonce('wp_rest'));
             return true;
         }
 
-        // Not logged in — try manual cookie auth
-        // Find the logged_in cookie
         $cookie_value = '';
         $cookie_name_found = '';
         foreach ($_COOKIE as $name => $value) {
@@ -119,7 +105,6 @@ add_action('rest_api_init', function () {
             @error_log(sprintf("[%s] MU_AUTH: no logged_in cookie found, anonymous request uri=%s\n",
                 gmdate('c'), $uri
             ), 3, $log);
-            // No cookie = unauthenticated request, that's fine
             return $result;
         }
 
@@ -127,7 +112,6 @@ add_action('rest_api_init', function () {
             gmdate('c'), $cookie_name_found, strlen($cookie_value), substr_count($cookie_value, '|'), $uri
         ), 3, $log);
 
-        // Try WP's own validation first
         $user_id = wp_validate_auth_cookie($cookie_value, 'logged_in');
         if ($user_id) {
             wp_set_current_user($user_id);
@@ -138,12 +122,10 @@ add_action('rest_api_init', function () {
             return true;
         }
 
-        // WP validation failed — try manual parsing
         @error_log(sprintf("[%s] MU_AUTH: wp_validate_auth_cookie FAILED, trying manual parse\n",
             gmdate('c')
         ), 3, $log);
 
-        // Try URL-decoding if needed
         $try_values = [$cookie_value];
         if (strpos($cookie_value, '%') !== false) {
             $try_values[] = urldecode($cookie_value);
@@ -161,7 +143,7 @@ add_action('rest_api_init', function () {
             list($username, $expiration, $token, $hmac) = $elements;
 
             if ((int) $expiration < time()) {
-                continue; // expired
+                continue;
             }
 
             $user = get_user_by('login', $username);
@@ -169,7 +151,6 @@ add_action('rest_api_init', function () {
                 continue;
             }
 
-            // Validate HMAC
             $pass_frag = substr($user->user_pass, 8, 4);
             $key = wp_hash($username . '|' . $pass_frag . '|' . $expiration . '|' . $token, 'logged_in');
             $algo = function_exists('hash') ? 'sha256' : 'sha1';
@@ -182,7 +163,6 @@ add_action('rest_api_init', function () {
                 continue;
             }
 
-            // Validate session token
             $manager = WP_Session_Tokens::get_instance($user->ID);
             if (!$manager->verify($token)) {
                 @error_log(sprintf("[%s] MU_AUTH: session token invalid for user '%s'\n",
@@ -191,7 +171,6 @@ add_action('rest_api_init', function () {
                 continue;
             }
 
-            // All checks passed!
             wp_set_current_user($user->ID);
             @error_log(sprintf("[%s] MU_AUTH: manual parse OK uid=%d user=%s, ALLOWING\n",
                 gmdate('c'), $user->ID, $username
@@ -206,10 +185,8 @@ add_action('rest_api_init', function () {
         return $result;
     }, 100);
 
-    // === Step 4: Log write operation responses to catch non-JSON output ===
     add_filter('rest_pre_serve_request', function ($served, $result, $request, $server) {
         $method = $request->get_method();
-        // Only log write operations (POST/PUT/PATCH/DELETE) and context=edit GETs
         $is_write = in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'], true);
         $is_edit = ($request->get_param('context') === 'edit');
         if (!$is_write && !$is_edit) return $served;
@@ -218,19 +195,16 @@ add_action('rest_api_init', function () {
         $route = $request->get_route();
         $status = $result->get_status();
 
-        // Check for any buffered output that would break JSON
         $ob_content = '';
-        $ob_level = ob_get_level();
-        if ($ob_level > 0) {
+        if (ob_get_level() > 0) {
             $ob_content = ob_get_contents();
         }
-        
-        // Get headers already sent
+
         $headers_sent = headers_sent($file, $line);
 
         @error_log(sprintf(
             "[%s] REST_RESPONSE: method=%s route=%s status=%d ob_level=%d ob_len=%d headers_sent=%s(%s:%d) uri=%s\n",
-            gmdate('c'), $method, $route, $status, $ob_level,
+            gmdate('c'), $method, $route, $status, ob_get_level(),
             strlen($ob_content), $headers_sent ? 'yes' : 'no',
             $headers_sent ? $file : '', $headers_sent ? $line : 0,
             isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : ''
