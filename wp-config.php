@@ -26,6 +26,8 @@ if ( isset( $_SERVER['HTTP_HOST'] ) && in_array( $_SERVER['HTTP_HOST'], array( '
 	define( 'DB_USER', 'root' );
 	define( 'DB_PASSWORD', '' );
 	define( 'DB_HOST', 'localhost' );
+	define( 'WP_HOME', 'http://localhost/kv-electronics' );
+	define( 'WP_SITEURL', 'http://localhost/kv-electronics' );
 } else {
 	define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
 	define( 'DB_USER', 'wp_whicu' );
