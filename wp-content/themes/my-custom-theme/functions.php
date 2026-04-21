@@ -5472,7 +5472,7 @@ add_filter('register_block_type_args', function($args, $name) {
 add_action('init', function() {
     // KV Contact Form Block
     register_block_type('kv/contact-form', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'heading'            => array('type' => 'string', 'default' => 'Send Us a Message'),
@@ -5514,7 +5514,7 @@ add_action('init', function() {
 
     // KV Google Map Block
     register_block_type('kv/google-map', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'mapUrl'         => array('type' => 'string',  'default' => ''),
@@ -5550,7 +5550,7 @@ add_action('init', function() {
 
     // KV Chat Buttons Block
     register_block_type('kv/chat-buttons', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'layout' => array('type' => 'string', 'default' => 'horizontal')
@@ -5560,7 +5560,7 @@ add_action('init', function() {
 
     // KV Quality Standards Block
     register_block_type('kv/quality-standards', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'sectionLabel'   => array('type' => 'string',  'default' => 'QUALITY STANDARDS'),
@@ -5576,7 +5576,7 @@ add_action('init', function() {
 
     // KV Product Categories Block
     register_block_type('kv/product-categories', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'columns'       => array('type' => 'number',  'default' => 3),
@@ -5592,7 +5592,7 @@ add_action('init', function() {
 
     // KV Applications Block
     register_block_type('kv/applications', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'supports' => array('align' => array('full', 'wide')),
         'attributes' => array(
@@ -5607,7 +5607,7 @@ add_action('init', function() {
 
     // KV Home Hero Block (editor preview + server render)
     register_block_type('kv/home-hero', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'title' => array('type' => 'string', 'default' => 'KV Electronics | Home'),
@@ -5622,7 +5622,7 @@ add_action('init', function() {
 
     // KV Why Choose Us Block
     register_block_type('kv/why-choose', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'title' => array('type' => 'string', 'default' => 'Why choose us'),
@@ -5634,7 +5634,7 @@ add_action('init', function() {
 
     // KV Ready to Get Started Block
     register_block_type('kv/ready-started', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'title' => array('type' => 'string', 'default' => 'Ready to Get Started?'),
@@ -5647,7 +5647,7 @@ add_action('init', function() {
 
     // KV Contact Info Cards Block — fully editable (icons, titles, colors, data)
     register_block_type('kv/contact-info', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'showAddress'  => array('type' => 'boolean', 'default' => true),
@@ -5682,14 +5682,14 @@ add_action('init', function() {
 
     // KV About Intro Block (Section 1)
     register_block_type('kv/about-intro', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-about-blocks',
         'render_callback' => function() { return do_shortcode('[kv_about_intro]'); }
     ));
 
     // KV About S2 Block (Section 2)
     register_block_type('kv/about-s2', array(
-        'api_version' => 2,
+        'api_version' => 3,
         'editor_script' => 'kv-about-blocks',
         'render_callback' => function() { return do_shortcode('[kv_about_s2]'); }
     ));
@@ -5727,12 +5727,12 @@ add_action('enqueue_block_editor_assets', function() {
 // Register Global Blocks (Navbar + Footer site-wide settings)
 add_action('init', function() {
     register_block_type('kv/site-navbar', array(
-        'api_version'     => 2,
+        'api_version'     => 3,
         'editor_script'   => 'kv-global-blocks',
         'render_callback' => '__return_empty_string',
     ));
     register_block_type('kv/site-footer', array(
-        'api_version'     => 2,
+        'api_version'     => 3,
         'editor_script'   => 'kv-global-blocks',
         'render_callback' => '__return_empty_string',
     ));
