@@ -28,7 +28,7 @@ get_header();
 <!-- ===================== PRODUCT CATEGORIES ===================== -->
 <section class="py-5" style="background-color:#f8fafc;">
     <div class="container py-4">
-        <h2 class="text-center fw-bold mb-5" style="font-size:2.25rem;">Our Product Categories</h2>
+        <h2 class="text-center fw-bold mb-5" style="font-size:2.25rem;">Our Product Categorie</h2>
         <div class="row g-4">
             <!-- Inductors -->
             <div class="col-md-4">
