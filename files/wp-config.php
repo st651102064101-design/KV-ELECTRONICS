@@ -123,6 +123,10 @@ define( 'DISALLOW_FILE_MODS', false );
 
 
 define('FS_METHOD', 'direct');
+
+/** Define Custom Temp Directory for Wordfence */
+define('WP_TEMP_DIR', dirname(__FILE__) . '/wp-content/temp/');
+
 /* That's all, stop editing! Happy publishing. */
 
 
