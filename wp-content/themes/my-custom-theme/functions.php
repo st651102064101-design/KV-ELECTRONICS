@@ -5483,7 +5483,7 @@ add_action('init', function() {
         'editor_script' => 'kv-contact-blocks',
         'attributes' => array(
             'heading'            => array('type' => 'string', 'default' => 'Send Us a Message'),
-            'subtitle'           => array('type' => 'string', 'default' => "Fill out the form below and we'll get back to you within 24 hours."),
+            'subtitle'           => array('type' => 'string', 'default' => "Fill out the form below and we'll get back to you within 24 hours. 2"),
             'headingSize'        => array('type' => 'number', 'default' => 24),
             'subtitleSize'       => array('type' => 'number', 'default' => 15),
             'headingColor'       => array('type' => 'string', 'default' => '#1e293b'),
@@ -5969,7 +5969,7 @@ function kv_render_contact_form_block($attributes) {
 
     // Read all attributes with defaults
     $heading      = isset($attributes['heading'])      ? $attributes['heading']      : 'Send Us a Message';
-    $subtitle     = isset($attributes['subtitle'])     ? $attributes['subtitle']     : "Fill out the form below and we'll get back to you within 24 hours.";
+    $subtitle     = isset($attributes['subtitle'])     ? $attributes['subtitle']     : "Fill out the form below and we'll get back to you within 24 hours. 2";
     $nameLabel    = isset($attributes['nameLabel'])    ? $attributes['nameLabel']    : 'Name';
     $namePh       = isset($attributes['namePlaceholder']) ? $attributes['namePlaceholder'] : 'Your name';
     $nameReq      = isset($attributes['nameRequired']) ? (bool)$attributes['nameRequired'] : true;

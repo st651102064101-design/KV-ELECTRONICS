@@ -57,7 +57,7 @@ registerBlockType('kv/contact-form', {
     supports: { html: false },
     attributes: {
         heading:           { type:'string', default:'Send Us a Message' },
-        subtitle:          { type:'string', default:"Fill out the form below and we'll get back to you within 24 hours." },
+        subtitle:          { type:'string', default:"Fill out the form below and we'll get back to you within 24 hours. 2" },
         headingSize:       { type:'number', default:24 },
         subtitleSize:      { type:'number', default:15 },
         headingColor:      { type:'string', default:'#1e293b' },
