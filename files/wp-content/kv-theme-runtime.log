@@ -2693,3 +2693,6 @@ Stack trace:
 [21-Apr-2026 07:58:02 UTC] [KV_MAIL] Brevo API failed (401): {"message":"API Key is not enabled","code":"unauthorized"}
 
 [21-Apr-2026 08:21:14 UTC] Unable to open /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/wflogs/config.php for reading and writing.
+[21-Apr-2026 08:21:55 UTC] Unable to open /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/wflogs/config.php for reading and writing.
+[21-Apr-2026 08:21:56 UTC] Unable to open /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/wflogs/config.php for reading and writing.
+[21-Apr-2026 08:22:15 UTC] Unable to open /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/wflogs/config.php for reading and writing.
