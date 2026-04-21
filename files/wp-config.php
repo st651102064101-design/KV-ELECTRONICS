@@ -31,17 +31,19 @@ if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !
  */
 
 // ** Database settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
-
-/** Database username */
-define( 'DB_USER', 'KV-ELECTRONICS' );
-
-/** Database password */
-define( 'DB_PASSWORD', 'Dcn7iAvad#7enR6&' );
-
-/** Database hostname */
-define( 'DB_HOST', 'localhost' );
+if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+    // --- Localhost (XAMPP) Database Settings ---
+    define( 'DB_NAME', 'DB-KV-ELECTRONICS' ); // ชื่อ Database ที่สร้างใน phpMyAdmin
+    define( 'DB_USER', 'root' );              // XAMPP Default User
+    define( 'DB_PASSWORD', '' );              // XAMPP Default Password (ว่างเปล่า)
+    define( 'DB_HOST', '127.0.0.1' );         // ใช้ 127.0.0.1 แทน localhost ใน Mac บางเครื่อง
+} else {
+    // --- Production Database Settings ---
+    define( 'DB_NAME', 'DB-KV-ELECTRONICS' );
+    define( 'DB_USER', 'KV-ELECTRONICS' );
+    define( 'DB_PASSWORD', 'Dcn7iAvad#7enR6&' );
+    define( 'DB_HOST', 'localhost' );
+}
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
