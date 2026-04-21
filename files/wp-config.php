@@ -1,12 +1,25 @@
 <?php
 // Dynamic Site URL for Localhost and Production
-if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
-    define('WP_HOME','https://localhost:36140/kv-electronics/files');
-    define('WP_SITEURL','https://localhost:36140/kv-electronics/files');
-} else {
-    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
-    define('WP_HOME', $protocol . $_SERVER['HTTP_HOST']);
-    define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST']);
+if (isset($_SERVER['HTTP_HOST'])) {
+    $is_secure = false;
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        $is_secure = true;
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+        $is_secure = true;
+    }
+    $protocol = $is_secure ? 'https://' : 'http://';
+
+    if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false) {
+        $base = '/KV-ELECTRONICS/files';
+        if (strpos(strtolower($_SERVER['REQUEST_URI']), '/kv-electronics/files') !== false) {
+            $base = substr($_SERVER['REQUEST_URI'], 0, stripos($_SERVER['REQUEST_URI'], '/files') + 6);
+        }
+        define('WP_HOME', $protocol . $_SERVER['HTTP_HOST'] . $base);
+        define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST'] . $base);
+    } else {
+        define('WP_HOME', $protocol . $_SERVER['HTTP_HOST']);
+        define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST']);
+    }
 }
 
 
