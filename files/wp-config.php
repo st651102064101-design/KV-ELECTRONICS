@@ -1,6 +1,13 @@
 <?php
-define('WP_HOME','https://localhost:36140/kv-electronics/files');
-define('WP_SITEURL','https://localhost:36140/kv-electronics/files');
+// Dynamic Site URL for Localhost and Production
+if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+    define('WP_HOME','https://localhost:36140/kv-electronics/files');
+    define('WP_SITEURL','https://localhost:36140/kv-electronics/files');
+} else {
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+    define('WP_HOME', $protocol . $_SERVER['HTTP_HOST']);
+    define('WP_SITEURL', $protocol . $_SERVER['HTTP_HOST']);
+}
 
 
 /**
