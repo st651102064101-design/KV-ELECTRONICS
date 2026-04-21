@@ -428,7 +428,14 @@ function kv_rebase_url( $url ) {
     if ( ! empty( $parsed['port'] ) ) {
         $origin .= ':' . $parsed['port'];
     }
-    return preg_replace( '#^https?://[^/]+#', $origin, $url );
+    $home_path = isset( $parsed['path'] ) ? untrailingslashit( $parsed['path'] ) : '';
+    $url = preg_replace( '#^https?://[^/]+#', $origin, $url );
+
+    if ( $home_path && strpos( $url, $origin . $home_path ) !== 0 ) {
+        $url = preg_replace( '#^' . preg_quote( $origin, '#' ) . '(/(wp-content|wp-includes|wp-admin)/)#', $origin . $home_path . '$1', $url );
+    }
+
+    return $url;
 }
     function kv_safe_image_url($url) {
         if (empty($url)) return '';
