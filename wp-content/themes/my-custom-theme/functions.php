@@ -7125,7 +7125,11 @@ function kv_render_home_hero_block($attributes = array()) {
             function tryPlay() {
                 try {
                     var p = video.play();
-                    if (p && typeof p.catch === 'function') p.catch(function(){});
+                    if (p) {
+                        if (typeof p.catch === 'function') {
+                            p.catch(function(){});
+                        }
+                    }
                 } catch(e) {}
             }
 
