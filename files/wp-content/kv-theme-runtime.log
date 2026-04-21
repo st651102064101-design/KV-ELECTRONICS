@@ -2712,3 +2712,26 @@ Stack trace:
 [21-Apr-2026 08:22:52 UTC] PHP Warning:  Undefined variable $nextUpdate in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/views/waf/option-rules.php on line 52
 [21-Apr-2026 08:22:52 UTC] PHP Warning:  Undefined variable $nextUpdate in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/views/waf/option-rules.php on line 53
 [21-Apr-2026 08:23:13 UTC] Unable to open /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/wflogs/config.php for reading and writing.
+[21-Apr-2026 08:27:44 UTC] PHP Notice:  tempnam(): file created in the system's temporary directory in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php on line 715
+[21-Apr-2026 08:27:44 UTC] PHP Fatal error:  Uncaught ValueError: Path cannot be empty in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php:716
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php(716): fopen('', 'r+')
+#1 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfScan.php(141): wfConfig::get_ser('wfsd_engine', false, false)
+#2 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wordfenceClass.php(1551): wfScan::wfScanMain()
+#3 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/class-wp-hook.php(341): wordfence::ajax_doScan_callback('')
+#4 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/class-wp-hook.php(365): WP_Hook->apply_filters('', Array)
+#5 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/plugin.php(522): WP_Hook->do_action(Array)
+#6 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-admin/admin-ajax.php(207): do_action('wp_ajax_nopriv_...')
+#7 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php on line 716
+[KV_FATAL] 2026-04-21T08:27:44+00:00 | URI: /kv-electronics/files/wp-admin/admin-ajax.php?action=wordfence_doScan&isFork=1&scanMode=highsensitivity&cronKey=8f7c1c99142cc33aef3a2d79680536b0&signature=4b6ee93e12640f36276d1414069480ab4bcb91770d678716edb79bd675390c16 | Uncaught ValueError: Path cannot be empty in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php:716
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php(716): fopen('', 'r+')
+#1 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfScan.php(141): wfConfig::get_ser('wfsd_engine', false, false)
+#2 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wordfenceClass.php(1551): wfScan::wfScanMain()
+#3 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/class-wp-hook.php(341): wordfence::ajax_doScan_callback('')
+#4 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/class-wp-hook.php(365): WP_Hook->apply_filters('', Array)
+#5 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-includes/plugin.php(522): WP_Hook->do_action(Array)
+#6 /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-admin/admin-ajax.php(207): do_action('wp_ajax_nopriv_...')
+#7 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php:716
