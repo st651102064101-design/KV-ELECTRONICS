@@ -1,0 +1,6 @@
+# --- Security Hardening ---
+# Block execution of all PHP files in the uploads directory
+# This kills 99% of malware backdoors uploaded via compromised themes/plugins
+<Files *.php>
+    deny from all
+</Files>
