@@ -422,24 +422,12 @@ if (!function_exists('kv_theme_is_non_routable_email')) {
  */
 function kv_rebase_url( $url ) {
     if ( empty( $url ) ) return '';
-
     $home   = home_url();
     $parsed = parse_url( $home );
     $origin = $parsed['scheme'] . '://' . $parsed['host'];
     if ( ! empty( $parsed['port'] ) ) {
         $origin .= ':' . $parsed['port'];
     }
-    $home_path = isset( $parsed['path'] ) ? rtrim( $parsed['path'], '/' ) : '';
-    if ( $home_path !== '' ) {
-        $origin .= $home_path;
-    }
-
-    // Remove duplicated base path when options already contain the site path.
-    if ( $home_path !== '' ) {
-        $double_path = preg_quote( $origin . $home_path, '#' );
-        $url = preg_replace( '#^' . $double_path . '#', $origin, $url );
-    }
-
     return preg_replace( '#^https?://[^/]+#', $origin, $url );
 }
     function kv_safe_image_url($url) {
@@ -883,27 +871,6 @@ add_action('wp_head', function() {
 // ============================================
 if (is_admin()) {
     require_once get_template_directory() . '/admin/product-manager.php';
-}
-
-// Local development HTML cleanup: fix duplicated localhost paths and escaped script tokens.
-if (!is_admin() && isset($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], array('localhost', '127.0.0.1'), true)) {
-    add_action('template_redirect', function() {
-        ob_start(function($buffer) {
-            $buffer = str_replace(
-                array(
-                    'http://localhost/kv-electronics/kv-electronics/',
-                    'https://localhost/kv-electronics/kv-electronics/'
-                ),
-                array(
-                    'http://localhost/kv-electronics/',
-                    'https://localhost/kv-electronics/'
-                ),
-                $buffer
-            );
-            $buffer = str_replace('&amp;&amp;', '&&', $buffer);
-            return $buffer;
-        });
-    });
 }
 
 // Front-end fallback for Product Manager spec helpers
