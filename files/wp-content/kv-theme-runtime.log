@@ -2831,3 +2831,5 @@ Stack trace:
   thrown in /Applications/XAMPP/xamppfiles/htdocs/kv-electronics/files/wp-content/plugins/wordfence/lib/wfConfig.php:716
 [21-Apr-2026 08:51:40 UTC] [KV_MAIL] Brevo API failed (401): {"message":"API Key is not enabled","code":"unauthorized"}
 
+[21-Apr-2026 10:15:25 UTC] [KV_MAIL] Brevo API failed (401): {"message":"API Key is not enabled","code":"unauthorized"}
+
