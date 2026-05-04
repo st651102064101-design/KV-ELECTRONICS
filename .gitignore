@@ -1,5 +1,8 @@
 files_old/wp-content/ai1wm-backups/*.wpress
 files/wp-content/ai1wm-backups/*.wpress
 wp-content/wflogs/
+# Local config override
+wp-config-local.php
+
 # Ignore backup ZIP archives and large export files that should not be committed
 *.zip

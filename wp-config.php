@@ -32,6 +32,12 @@ define( 'DB_PASSWORD', 'K2xg#$5KgIaU9nw9' );
 /** Database hostname */
 define( 'DB_HOST', 'localhost:3306' );
 
+// Load local overrides for localhost/development environment.
+// Create wp-config-local.php with DB_USER='root' and DB_PASSWORD='' when needed.
+if ( file_exists( __DIR__ . '/wp-config-local.php' ) ) {
+	include __DIR__ . '/wp-config-local.php';
+}
+
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
 
